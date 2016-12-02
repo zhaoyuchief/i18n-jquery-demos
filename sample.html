@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <script src="./jquery.js"></script>
+    <script src="./i18next.min.js"></script>
+    <script src="./i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="./jquery-i18next.min.js"></script>
+</head>
+
+<body>
+
+<div>open console</div>
+
+<ul class="nav">
+    <li><a href="#" data-i18n="nav.home"></a></li>
+    <li><a href="#" data-i18n="nav.page1"></a></li>
+    <li><a href="#" data-i18n="nav.page2"></a></li>
+</ul>
+
+<button onclick="changeLanguage('en')">英文</button>
+<button onclick="changeLanguage('zh')">中文</button>
+<script>
+
+
+    // use plugins and options as needed, for options, detail see
+    // http://i18next.com/docs/
+    i18next
+        .use(window.i18nextBrowserLanguageDetector)
+        .init({
+                load:'all',
+                lng: 'en', // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetecto
+                debug: true,
+                resources: { // evtl. load via xhr https://github.com/i18next/i18next-xhr-backend
+                    en: {
+                        translation: {
+                            input: {
+                                placeholder: "a placeholder"
+                            },
+                            nav: {
+                                home: 'Home',
+                                page1: 'Page One',
+                                page2: 'Page Two'
+                            }
+                        }
+                    },
+                    zh: {
+                        translation: {
+                            input: {
+                                placeholder: "a placeholder"
+                            },
+                            nav: {
+                                home: '首页',
+                                page1: '页面1',
+                                page2: '页面2'
+                            }
+                        }
+                    }
+                }
+            }, function (err, t) {
+
+            jqueryI18next.init(i18next, $);
+
+            console.warn(i18next.t('input.placeholder'));
+            console.warn(i18next.t('nav.home'));
+            console.warn(i18next);
+
+            $('body').localize();
+    });
+    function changeLanguage(lan){
+        i18next.changeLanguage(lan, (err, t) => {
+            // resources have been loaded
+            $('body').localize();
+        });
+    }
+</script>
+
+</body>
+
+</html>
