@@ -17,7 +17,7 @@
 ```
 ###初始化i18next.init
 
-```html
+```js
 i18next.use(window.i18nextBrowserLanguageDetector)
         .init({
                 load:'all',
